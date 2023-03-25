@@ -1,0 +1,7 @@
+apiVersion: 1
+
+datasources:
+  - name: CanEdge
+    type: grafana-simple-json-datasource
+    url: http://canedge
+    isDefault: true

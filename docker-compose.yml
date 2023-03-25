@@ -1,0 +1,28 @@
+version: '2.4'
+
+services:
+  canedge:
+    build: .
+    restart: unless-stopped
+    container_name: canedge
+    expose:
+      - 80
+    volumes:
+      - ./LOG:/LOG:ro
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    container_name: grafana
+    volumes:
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=canedge
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_INSTALL_PLUGINS=grafana-simple-json-datasource
+  
